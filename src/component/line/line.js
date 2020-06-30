@@ -20,16 +20,18 @@ class Line extends React.Component {
       .append('path')
       .datum(initialData)
       .attr('id', 'line')
-      .attr('stroke', 'black')
+      .attr('stroke', 'steelblue')
       .attr('stroke-width', 2)
       .attr('fill', 'none')
       .attr('d', lineGenerator);
 
     this.updateChart();
   }
+
   componentDidUpdate() {
     this.updateChart();
   }
+
   updateChart() {
     const { lineGenerator, data } = this.props;
 
@@ -39,6 +41,7 @@ class Line extends React.Component {
 
     line.datum(data).transition(t).attr('d', lineGenerator);
   }
+
   render() {
     return <g className='line-group' ref={this.ref} />;
   }

@@ -1,12 +1,20 @@
 import React from 'react';
 import './App.css';
-import LineChart from './LineChart';
+import LinechartFx from './LinechartFx';
+import { Container, Typography, Card, CardContent } from '@material-ui/core';
 
 function App() {
   return (
-    <div>
-      <LineChart />
-    </div>
+    <Container maxWidth='md'>
+      <Card>
+        <CardContent>
+          <Typography variant='h5' color='initial'>
+            Line Chart AAPL
+          </Typography>
+          <LinechartFx />
+        </CardContent>
+      </Card>
+    </Container>
   );
 }
 

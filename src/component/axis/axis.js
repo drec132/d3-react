@@ -23,7 +23,7 @@ export default class Axis extends Component {
     let axis;
 
     if (orient === 'bottom') {
-      axis = axisBottom(scale);
+      axis = axisBottom(scale).ticks(ticks);
     }
     if (orient === 'left') {
       axis = axisLeft(scale).ticks(ticks);
@@ -37,6 +37,12 @@ export default class Axis extends Component {
 
     if (orient === 'left') {
       const axis = axisLeft(scale).ticks(ticks);
+      selectAll(`.${orient}`).transition(t).call(axis);
+    }
+    if (orient === 'bottom') {
+      const axis = axisBottom(scale)
+        .ticks(800 / 80)
+        .tickSizeOuter(0);
       selectAll(`.${orient}`).transition(t).call(axis);
     }
   }

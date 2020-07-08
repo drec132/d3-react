@@ -35,16 +35,16 @@ export default class Axis extends Component {
     const { scale, orient, ticks } = this.props;
     const t = transition().duration(1000);
 
+    let axis;
     if (orient === 'left') {
-      const axis = axisLeft(scale).ticks(ticks);
-      selectAll(`.${orient}`).transition(t).call(axis);
+      axis = axisLeft(scale).ticks(ticks);
     }
     if (orient === 'bottom') {
-      const axis = axisBottom(scale)
-        .ticks(800 / 80)
+      axis = axisBottom(scale)
+        .ticks(500 / 80)
         .tickSizeOuter(0);
-      selectAll(`.${orient}`).transition(t).call(axis);
     }
+    selectAll(`.${orient}`).transition(t).call(axis);
   }
 
   render() {

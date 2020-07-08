@@ -11,6 +11,7 @@ function App() {
           <Typography variant='h5' color='initial'>
             Line Chart AAPL
           </Typography>
+          {/* Since referencing this component we can pass WIDTH, HEIGHT */}
           <LinechartFx />
         </CardContent>
       </Card>

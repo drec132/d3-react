@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import * as d3 from 'd3';
 import aapl from './data/aapl.csv';
 import {
   transition,
@@ -8,6 +7,7 @@ import {
   extent,
   line,
   curveMonotoneX,
+  csv,
 } from 'd3';
 import XYAxis from './component/axis/xy-axis';
 import Line from './component/line/line';
@@ -18,7 +18,7 @@ export default function LinechartFx() {
   });
 
   useEffect(() => {
-    d3.csv(aapl).then(function (data) {
+    csv(aapl).then(function (data) {
       let tData = [];
       data.forEach((tempData) => {
         return tData.push({
@@ -43,16 +43,17 @@ export default function LinechartFx() {
 
   const { lineData } = state;
 
+  // Configuration for the axises
   const xScale = scaleBand()
     .domain(lineData.map((d) => d.name))
-    .rangeRound([0, width])
-    .padding(0.1);
+    .range([margins.left, width - margins.right]);
 
   const yScale = scaleLinear()
     .domain(extent(lineData, (d) => d.value))
-    .range([height, 0])
+    .rangeRound([height - margins.bottom, margins.top])
     .nice();
 
+  // Configuration for the chart
   const lineGenerator = line()
     .x((d) => xScale(d.name))
     .y((d) => yScale(d.value))

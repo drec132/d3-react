@@ -22,6 +22,8 @@ class Line extends React.Component {
       .attr('id', 'line')
       .attr('stroke', 'steelblue')
       .attr('stroke-width', 2)
+      .attr('stroke-linejoin', 'round')
+      .attr('stroke-linecap', 'round')
       .attr('fill', 'none')
       .attr('d', lineGenerator);
 

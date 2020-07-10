@@ -1,55 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import aapl from './data/aapl.csv';
+import React from 'react';
 import {
   transition,
-  scaleBand,
   scaleLinear,
   extent,
   line,
   curveMonotoneX,
-  csv,
+  scaleUtc,
 } from 'd3';
 import XYAxis from './component/axis/xy-axis';
 import Line from './component/line/line';
 
-export default function LinechartFx() {
-  const [state, setState] = useState({
-    lineData: [],
-  });
+export default function LinechartFx(props) {
+  const { chartHeight, chartWidth, data } = props;
 
-  useEffect(() => {
-    csv(aapl).then(function (data) {
-      let tData = [];
-      data.forEach((tempData) => {
-        return tData.push({
-          name: tempData.date,
-          value: parseFloat(tempData.close),
-        });
-      });
-      setState({
-        lineData: tData,
-      });
-    });
-  }, []);
-
-  const parentWidth = 800;
   const margins = { top: 20, right: 30, bottom: 30, left: 50 };
 
-  const width = parentWidth - margins.left - margins.right;
-  const height = 500 - margins.top - margins.bottom;
+  const width = chartWidth - margins.left - margins.right;
+  const height = chartHeight - margins.top - margins.bottom;
 
   const ticks = 5;
   const t = transition().duration(1000);
 
-  const { lineData } = state;
-
   // Configuration for the axises
-  const xScale = scaleBand()
-    .domain(lineData.map((d) => d.name))
+  const xScale = scaleUtc()
+    .domain(extent(data, (d) => d.name))
     .range([margins.left, width - margins.right]);
 
   const yScale = scaleLinear()
-    .domain(extent(lineData, (d) => d.value))
+    .domain(extent(data, (d) => d.value))
     .rangeRound([height - margins.bottom, margins.top])
     .nice();
 
@@ -68,7 +46,7 @@ export default function LinechartFx() {
       <g transform={`translate(${margins.left}, ${margins.top})`}>
         <XYAxis {...{ xScale, yScale, height, ticks, t }} />
         <Line
-          data={lineData}
+          data={data}
           xScale={xScale}
           yScale={yScale}
           lineGenerator={lineGenerator}

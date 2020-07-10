@@ -7,6 +7,7 @@ class Line extends React.Component {
     super();
     this.ref = React.createRef();
   }
+
   componentDidMount() {
     const node = this.ref.current;
     const { data, lineGenerator } = this.props;
